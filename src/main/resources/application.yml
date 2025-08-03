@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: ai-code-companion
+  profiles:
+    active: local
