@@ -33,7 +33,7 @@
 
 ```
 src/main/java
-└─ com.plusl.ai.aicodecompanion
+└─ com.plusl.ai.codewith
    ├─ AgentApplication.java
    ├─ infra
    │  ├─ config

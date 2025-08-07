@@ -1,4 +1,4 @@
-package com.plusl.ai.aicodecompanion;
+package com.plusl.ai.codewith;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
