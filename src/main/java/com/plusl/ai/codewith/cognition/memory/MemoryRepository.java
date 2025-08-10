@@ -8,7 +8,7 @@ import java.util.Optional;
 /**
  * 记忆仓库类
  *
- * @Author PlusL
+ * @author PlusL
  */
 @Repository
 public class MemoryRepository {
@@ -22,10 +22,10 @@ public class MemoryRepository {
     /**
      * 保存对话
      * 
-     * @param conversation 对话实例
+     * @param memory 对话实例
      */
-    public void save(Conversation conversation) {
-        storagePort.put(conversation.getId(), conversation);
+    public void save(Memory memory) {
+        storagePort.put(memory.getId(), memory);
     }
     
     /**
@@ -34,8 +34,8 @@ public class MemoryRepository {
      * @param id 对话ID
      * @return 对话实例的Optional包装
      */
-    public Optional<Conversation> getById(String id) {
-        return storagePort.get(id, Conversation.class);
+    public Optional<Memory> getById(String id) {
+        return storagePort.get(id, Memory.class);
     }
     
     /**
@@ -43,7 +43,7 @@ public class MemoryRepository {
      * 
      * @return 新对话实例
      */
-    public Conversation createNew() {
-        return new Conversation();
+    public Memory createNew() {
+        return new Memory();
     }
 }

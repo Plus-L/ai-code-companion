@@ -406,7 +406,7 @@ classDiagram
 
     class Session {
         +String id
-        +Conversation conversation
+        +Conversation memory
         +SessionStatus status
         +void onUserMessage(String text)
         +String getReply()

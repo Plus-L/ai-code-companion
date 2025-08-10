@@ -8,24 +8,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.plusl.ai.codewith.infra.common.CommonConstants.ROLE_ASSISTANT;
+import static com.plusl.ai.codewith.infra.common.CommonConstants.ROLE_USER;
+
 /**
  * 对话类
  *
- * @Author PlusL
+ * @author PlusL
  */
 @Data
-public class Conversation {
+public class Memory {
     private String id;
     private List<Message> messages;
+    private Integer maxMessages = 100;
     private LocalDateTime createdAt;
     
-    public Conversation() {
+    public Memory() {
         this.id = UUID.randomUUID().toString();
         this.messages = new ArrayList<>();
         this.createdAt = LocalDateTime.now();
     }
     
-    public Conversation(String id, List<Message> messages, LocalDateTime createdAt) {
+    public Memory(String id, List<Message> messages, LocalDateTime createdAt) {
         this.id = id;
         this.messages = messages;
         this.createdAt = createdAt;
@@ -37,7 +41,7 @@ public class Conversation {
      * @param content 消息内容
      */
     public void addUserMessage(String content) {
-        messages.add(new Message("user", content, LocalDateTime.now()));
+        messages.add(new Message(ROLE_USER, content, LocalDateTime.now()));
     }
     
     /**
@@ -46,7 +50,7 @@ public class Conversation {
      * @param content 消息内容
      */
     public void addAssistantMessage(String content) {
-        messages.add(new Message("assistant", content, LocalDateTime.now()));
+        messages.add(new Message(ROLE_ASSISTANT, content, LocalDateTime.now()));
     }
     
     /**

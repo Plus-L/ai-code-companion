@@ -1,6 +1,6 @@
 package com.plusl.ai.codewith.session;
 
-import com.plusl.ai.codewith.cognition.memory.Conversation;
+import com.plusl.ai.codewith.cognition.memory.Memory;
 import com.plusl.ai.codewith.cognition.planner.Action;
 import com.plusl.ai.codewith.cognition.planner.Planner;
 import com.plusl.ai.codewith.tool.ToolRegistry;
@@ -13,7 +13,7 @@ import java.util.UUID;
 /**
  * 会话类
  *
- * @Author PlusL
+ * @author PlusL
  */
 @Component
 @Scope("prototype")
@@ -21,13 +21,13 @@ import java.util.UUID;
 public class Session {
     
     private String id;
-    private Conversation conversation;
+    private Memory memory;
     private final Planner planner;
     private final ToolRegistry toolRegistry;
     
     public Session(Planner planner, ToolRegistry toolRegistry) {
         this.id = UUID.randomUUID().toString();
-        this.conversation = new Conversation();
+        this.memory = new Memory();
         this.planner = planner;
         this.toolRegistry = toolRegistry;
     }
@@ -40,14 +40,14 @@ public class Session {
      */
     public String onUserMessage(String message) {
         // 添加用户消息到对话历史
-        conversation.addUserMessage(message);
+        memory.addUserMessage(message);
         
         // 使用Planner生成行动计划
-        Action action = planner.plan(conversation);
+        Action action = planner.plan(memory);
         
         if (action.isAnswer()) {
             // 如果是直接回答，添加到对话历史并返回
-            conversation.addAssistantMessage(action.content());
+            memory.addAssistantMessage(action.content());
             return action.content();
         } else if (action.isToolCall()) {
             // 如果是工具调用，执行工具并获取结果

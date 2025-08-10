@@ -1,14 +1,15 @@
 package com.plusl.ai.codewith.cognition.planner;
 
 import com.plusl.ai.codewith.cognition.client.LlmClient;
-import com.plusl.ai.codewith.cognition.memory.Conversation;
+import com.plusl.ai.codewith.cognition.memory.Memory;
 import com.plusl.ai.codewith.tool.ToolRegistry;
 import org.springframework.stereotype.Component;
 
 /**
  * 基于ReAct（Reasoning + Action）的规划器实现
  *
- * @Author PlusL
+ * @author PlusL
+ * @since 0.0.1
  */
 @Component
 public class ReActPlanner implements Planner {
@@ -22,7 +23,7 @@ public class ReActPlanner implements Planner {
     }
     
     @Override
-    public Action plan(Conversation conversation) {
+    public Action plan(Memory memory) {
         // TODO: 实现ReAct规划逻辑
         // 构建Prompt
         // 调用LLM

@@ -18,6 +18,9 @@ import reactor.core.publisher.Flux;
 import java.io.IOException;
 import java.util.List;
 
+import static com.plusl.ai.codewith.infra.common.CommonConstants.CONTENT;
+import static com.plusl.ai.codewith.infra.common.CommonConstants.ROLE_USER;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -35,7 +38,7 @@ public class DefaultLlmClient implements LlmClient {
 
         RequestBody body = RequestBody.create(
                 requestBody.toString(),
-                MediaType.parse("application/json")
+                MediaType.parse(org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
         );
 
         Request request = new Request.Builder()
@@ -48,11 +51,6 @@ public class DefaultLlmClient implements LlmClient {
         try (Response response = defaultOkHttpClient.newCall(request).execute()) {
             if (response.isSuccessful() && response.body() != null) {
                 JSONObject responseBody = JSONObject.parseObject(response.body().string());
-//                    JSONArray choices = responseBody.getJSONArray("choices");
-//                    if (!choices.isEmpty()) {
-//                        JSONObject message = choices.getJSONObject(0).getJSONObject("message");
-//                        return message.getString("content");
-//                    }
                 return responseBody.toString();
             }
         } catch (IOException e) {
@@ -82,6 +80,12 @@ public class DefaultLlmClient implements LlmClient {
                 .bodyToFlux(String.class);
     }
 
+    /**
+     * 生成请求体
+     *
+     * @param messages 消息列表
+     * @return 请求体
+     */
     @NotNull
     private JSONObject genReqBody(List<ChatMessage> messages) {
         JSONObject requestBody = new JSONObject();
@@ -90,8 +94,8 @@ public class DefaultLlmClient implements LlmClient {
         JSONArray messageArray = new JSONArray();
         for (ChatMessage message : messages) {
             JSONObject msg = new JSONObject();
-            msg.put("role", message.getRole());
-            msg.put("content", message.getContent());
+            msg.put(ROLE_USER, message.getRole());
+            msg.put(CONTENT, message.getContent());
             messageArray.add(msg);
         }
         requestBody.put("messages", messageArray);
