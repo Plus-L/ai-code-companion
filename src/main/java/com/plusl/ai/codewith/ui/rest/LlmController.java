@@ -1,6 +1,6 @@
 package com.plusl.ai.codewith.ui.rest;
 
-import com.plusl.ai.codewith.cognition.client.LlmClient;
+import com.plusl.ai.codewith.cognition.client.ChatClient;
 import com.plusl.ai.codewith.infra.entity.BaseChatRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +17,15 @@ import reactor.core.publisher.Flux;
 public class LlmController {
 
     @Autowired
-    private LlmClient llmClient;
+    private ChatClient chatClient;
 
     @PostMapping("/completion")
     public String completion(@RequestBody BaseChatRequest messages) {
-        return llmClient.chat(messages);
+        return chatClient.chat(messages);
     }
 
     @PostMapping(value = "/completion/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> completionStream(@RequestBody BaseChatRequest messages) {
-        return llmClient.chatStream(messages);
+        return chatClient.chatStream(messages);
     }
 }

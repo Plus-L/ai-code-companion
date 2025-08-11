@@ -8,7 +8,7 @@ import reactor.core.publisher.Flux;
  *
  * @Author PlusL
  */
-public interface LlmClient {
+public interface ChatClient {
 
     /**
      * 与LLM进行对话

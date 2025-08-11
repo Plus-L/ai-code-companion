@@ -1,6 +1,6 @@
 package com.plusl.ai.codewith.cognition.planner;
 
-import com.plusl.ai.codewith.cognition.client.LlmClient;
+import com.plusl.ai.codewith.cognition.client.ChatClient;
 import com.plusl.ai.codewith.cognition.memory.Memory;
 import com.plusl.ai.codewith.tool.ToolRegistry;
 import org.springframework.stereotype.Component;
@@ -14,11 +14,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReActPlanner implements Planner {
     
-    private final LlmClient llmClient;
+    private final ChatClient chatClient;
     private final ToolRegistry toolRegistry;
     
-    public ReActPlanner(LlmClient llmClient, ToolRegistry toolRegistry) {
-        this.llmClient = llmClient;
+    public ReActPlanner(ChatClient chatClient, ToolRegistry toolRegistry) {
+        this.chatClient = chatClient;
         this.toolRegistry = toolRegistry;
     }
     

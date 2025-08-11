@@ -24,7 +24,7 @@ import static com.plusl.ai.codewith.infra.common.CommonConstants.ROLE_USER;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class DefaultLlmClient implements LlmClient {
+public class DefaultChatClient implements ChatClient {
 
     @Autowired
     private LlmConfigProperty defaultLlmConfig;

@@ -6,18 +6,18 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
 /**
- * OpenAI客户端实现
+ * Mock LLM客户端实现，用于测试
  *
  * @Author PlusL
  */
 @Component
-@Profile("prod")
-public class OpenAiClient implements LlmClient {
+@Profile("test")
+public class MockChatClient implements ChatClient {
     
     @Override
     public String chat(BaseChatRequest chatRequest) {
-        // TODO: 实现与OpenAI API的实际调用
-        return "Mock OpenAI response";
+        // 模拟LLM回复
+        return "{\"tool\": \"echo\", \"params\": {\"text\": \"Hello, this is a mock response!\"}}";
     }
 
     @Override
