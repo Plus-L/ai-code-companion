@@ -3,9 +3,11 @@ package com.plusl.ai.codewith.agent;
 import com.plusl.ai.codewith.cognition.client.ChatClient;
 import com.plusl.ai.codewith.cognition.memory.Memory;
 import com.plusl.ai.codewith.infra.common.AgentState;
+import com.plusl.ai.codewith.infra.entity.AgentStepResp;
 import com.plusl.ai.codewith.infra.exception.BaseException;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -20,6 +22,7 @@ import static com.plusl.ai.codewith.infra.common.CommonConstants.ROLE_SYSTEM;
  * @author plusL
  * @since 0.0.1
  */
+@Slf4j
 @Data
 public abstract class BaseAgent {
 
@@ -123,13 +126,42 @@ public abstract class BaseAgent {
             throw new BaseException(500, "User prompt can not be empty");
         }
 
-        this.state = AgentState.WORKING;
+        this.state = AgentState.RUNNING;
         this.memory.addUserMessage(userPrompt);
 
-        // TODO: 执行agent逻辑
+        AgentStepResp agentStepResp = new AgentStepResp();
 
-        return "mock";
+        // TODO: 执行agent逻辑
+        try {
+            for (int i = 0; i < maxSteps && this.state != AgentState.COMPLETED; i++) {
+                int step = i + 1;
+                this.currentStep = step;
+                String currentStepResult = step();
+                agentStepResp.addStepResult(step, currentStepResult);
+            }
+            if (this.currentStep >= maxSteps) {
+                this.state = AgentState.COMPLETED;
+                agentStepResp.addTerminateReason("max steps reached {" + maxSteps + "}");
+            }
+        } catch (Exception e) {
+            this.state = AgentState.ERROR;
+            log.error("Agent run error", e);
+            return "Agent run error";
+        } finally {
+            this.cleanup();
+        }
+
+        return String.join("\n", agentStepResp.getStepResults());
     }
+
+    /**
+     * 执行单个步骤
+     *
+     * @return 执行结果
+     */
+    public abstract String step();
+
+    protected void cleanup() {}
 
     /**
      * 替换系统提示词

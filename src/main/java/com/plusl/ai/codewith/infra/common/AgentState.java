@@ -5,7 +5,7 @@ package com.plusl.ai.codewith.infra.common;
  * Each state indicates the current operational status of the agent.
  *
  * @author PlusL
- * @since 1.0
+ * @since 0.0.1
  */
 public enum AgentState {
     
@@ -17,7 +17,7 @@ public enum AgentState {
     /**
      * The agent is currently working on a task.
      */
-    WORKING,
+    RUNNING,
     
     /**
      * The agent has completed its task successfully.
@@ -27,5 +27,5 @@ public enum AgentState {
     /**
      * The agent has failed to complete its task.
      */
-    FAILED
+    ERROR
 }
