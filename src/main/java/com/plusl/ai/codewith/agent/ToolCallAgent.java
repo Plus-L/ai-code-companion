@@ -29,4 +29,9 @@ public class ToolCallAgent extends ReActAgent{
     public String act() {
         return "";
     }
+
+    @Override
+    public String observe() {
+        return "";
+    }
 }

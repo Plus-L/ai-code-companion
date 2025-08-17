@@ -24,13 +24,13 @@ public class WeatherTool implements Tool {
     
     @Override
     public ToolResult apply(Map<String, Object> params) {
-        String city = (String) params.get("city");
-        if (city == null || city.isEmpty()) {
-            return ToolResult.failure("城市参数不能为空");
+        String location = (String) params.get("location");
+        if (location == null || location.isEmpty()) {
+            return ToolResult.failure("位置参数不能为空");
         }
         
         // 模拟天气数据
-        String weatherInfo = String.format("天气: 晴朗, 温度: 25°C, 城市: %s", city);
+        String weatherInfo = String.format("天气: 晴朗, 温度: 25°C, 湿度: 60%%, 位置: %s", location);
         return ToolResult.success(weatherInfo);
     }
 }

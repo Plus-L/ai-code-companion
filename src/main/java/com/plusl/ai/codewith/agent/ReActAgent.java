@@ -34,6 +34,13 @@ public abstract class ReActAgent extends BaseAgent {
     public abstract String act();
 
     /**
+     * 观察阶段，观察任务执行结果与情况
+     *
+     * @return 当前环境的观察状态描述信息
+     */
+    public abstract String observe();
+
+    /**
      * 执行单个智能体步骤，按照 ReAct 模式进行决策和执行。
      *
      * <p>该方法首先调用 {@link #think()} 方法进行思考决策，
@@ -53,6 +60,8 @@ public abstract class ReActAgent extends BaseAgent {
         } catch (Exception e) {
             log.error("ReActAgent step error: {}", e.getMessage());
             return "Error: " + e.getMessage();
+        } finally {
+            observe();
         }
     }
 }
